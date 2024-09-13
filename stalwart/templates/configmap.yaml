@@ -9,12 +9,8 @@ data:
     [lookup.default]
     hostname = "mail.{{ .Values.mail.domain }}"
 
-    [server.http]
-    hsts = true
-    use-x-forwarded = true
-
     [server.listener."http"]
-    bind = "[::]:80"
+    bind = ["[::]:80"]
     protocol = "http"
 
     [server.listener."smtp"]
