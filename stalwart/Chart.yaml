@@ -1,0 +1,8 @@
+apiVersion: v2
+name: stalwart
+description: Deploy the Stalwart Mail Server
+type: application
+# This is the chart version. This version number is automatically incremented with each release
+version: 0.0.0
+# This is the version number of the stalwart mail server being deployed.
+appVersion: "v0.9.4"

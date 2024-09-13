@@ -1,0 +1,21 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "stalwart.fullname" . }}
+  labels:
+    {{- include "stalwart.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`mail.{{ .Values.mail.domain }}`) || Host(`autodiscover.{{ .Values.mail.domain }}`) || Host(`autoconfig.{{ .Values.mail.domain }}`) || Host(`mta-sts.{{ .Values.mail.domain }}`)
+      services:
+        - kind: Service
+          name: {{ include "stalwart.fullname" . }}-web
+          port: 80
+  tls:
+    secretName: {{ .Values.ingress.secretName | quote }}
+{{- end }}

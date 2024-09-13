@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "stalwart.fullname" . }}
+  labels:
+    {{- include "stalwart.labels" . | nindent 4 }}
+data:
+  config.toml: |
+    [lookup.default]
+    hostname = "mail.{{ .Values.mail.domain }}"
+
+    [server.http]
+    hsts = true
+    use-x-forwarded = true
+
+    [server.listener."smtp"]
+    bind = ["[::]:25"]
+    protocol = "smtp"
+
+    [server.listener."submissions"]
+    bind = ["[::]:465"]
+    protocol = "smtp"
+    tls.implicit = true
+
+    [server.listener."imaptls"]
+    bind = ["[::]:993"]
+    protocol = "imap"
+    tls.implicit = true
+
+    [storage]
+    data = "rocksdb"
+    fts = "rocksdb"
+    blob = "rocksdb"
+    lookup = "rocksdb"
+    directory = "internal"
+
+    [store."rocksdb"]
+    type = "rocksdb"
+    path = "%{env:STALWART_PATH}%/data"
+    compression = "lz4"
+
+    [directory."internal"]
+    type = "internal"
+    store = "rocksdb"
+
+    [tracer."stdout"]
+    type = "stdout"
+    level = "info"
+    ansi = false
+    enable = true
+
+    [authentication.fallback-admin]
+    user = "%{env:ADMIN_USER}%"
+    secret = "%{env:ADMIN_HASH}%"
