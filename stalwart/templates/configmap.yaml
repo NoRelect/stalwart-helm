@@ -10,20 +10,20 @@ data:
     hostname = "mail.{{ .Values.mail.domain }}"
 
     [server.listener."http"]
-    bind = ["0.0.0.0:80"]
+    bind = ["[::]:80"]
     protocol = "http"
 
     [server.listener."smtp"]
-    bind = ["0.0.0.0:25"]
+    bind = ["[::]:25"]
     protocol = "smtp"
 
     [server.listener."submissions"]
-    bind = ["0.0.0.0:465"]
+    bind = ["[::]:465"]
     protocol = "smtp"
     tls.implicit = true
 
     [server.listener."imaptls"]
-    bind = ["0.0.0.0:993"]
+    bind = ["[::]:993"]
     protocol = "imap"
     tls.implicit = true
 
