@@ -13,6 +13,10 @@ data:
     hsts = true
     use-x-forwarded = true
 
+    [server.listener."http"]
+    bind = "[::]:80"
+    protocol = "http"
+
     [server.listener."smtp"]
     bind = ["[::]:25"]
     protocol = "smtp"
