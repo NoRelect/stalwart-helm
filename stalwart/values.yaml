@@ -48,7 +48,7 @@ securityContext: {}
 
 service:
   type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
 
 ingress:
   enabled: false
